@@ -10,9 +10,10 @@ RSpec.describe Attempt do
     Attempts::Start.new(task_id: task.id, name: "First attempt").perform
 
     expect(Attempt.count).to eq(1)
-    attempt  = Attempt.first
+    attempt = Attempt.first
 
     expect(attempt.time_periods.count).to eq(1)
+    expect(attempt.task).to eq(task)
     time_period = attempt.time_periods.first
     expect(time_period.starts).not_to be_nil
     expect(time_period.finishes).to be_nil

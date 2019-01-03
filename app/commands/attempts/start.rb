@@ -9,6 +9,7 @@ module Attempts
       task = Task.find(@task_id)
       attempt = task.attempts.create(name: @name)
       attempt.add_new_time_period
+      attempt
     end
   end
 end
