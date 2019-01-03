@@ -2,15 +2,8 @@ require "rails_helper"
 
 RSpec.describe Tries do
   it "tries lifecycle, supplying attempt on create" do
-    Tasks::Start.new(name: "First task").perform
-
-    expect(Task.count).to eq(1)
-    task = Task.first
-
-    Attempts::Start.new(task_id: task.id, name: "First attempt").perform
-
-    expect(Attempt.count).to eq(1)
-    attempt = Attempt.first
+    task = Tasks::Start.new(name: "First task").perform
+    attempt = Attempts::Start.new(task_id: task.id, name: "First attempt").perform
 
     Tries::Start.new(attempt_id: attempt.id, name: "First try").perform
 
@@ -46,10 +39,7 @@ RSpec.describe Tries do
   end
 
   it "tries lifecycle, not supplying attempt on create" do
-    Tasks::Start.new(name: "First task").perform
-
-    expect(Task.count).to eq(1)
-    task = Task.first
+    task = Tasks::Start.new(name: "First task").perform
 
     Tries::Start.new(task_id: task.id, name: "First try").perform
 
