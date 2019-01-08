@@ -15,6 +15,7 @@ module Tries
 
       try = attempt.tries.create(name: @name, task_id: attempt.task_id)
       try.add_new_time_period
+      try
     end
   end
 end

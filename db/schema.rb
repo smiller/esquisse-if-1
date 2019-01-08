@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_02_164849) do
+ActiveRecord::Schema.define(version: 2019_01_08_024156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 2019_01_02_164849) do
     t.index ["task_id"], name: "index_attempts_on_task_id"
   end
 
+  create_table "notes", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "notable_type"
+    t.bigint "notable_id"
+    t.datetime "set_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notable_type", "notable_id"], name: "index_notes_on_notable_type_and_notable_id"
+  end
+
   create_table "phases", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -36,6 +47,21 @@ ActiveRecord::Schema.define(version: 2019_01_02_164849) do
     t.datetime "updated_at", null: false
     t.index ["attempt_id"], name: "index_phases_on_attempt_id"
     t.index ["task_id"], name: "index_phases_on_task_id"
+  end
+
+  create_table "tag_links", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.string "taggable_type"
+    t.bigint "taggable_id"
+    t.index ["tag_id"], name: "index_tag_links_on_tag_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_tag_links_on_taggable_type_and_taggable_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tasks", force: :cascade do |t|
